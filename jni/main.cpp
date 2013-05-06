@@ -18,7 +18,7 @@
 //BEGIN_INCLUDE(all)
 #include <jni.h>
 #include <errno.h>
-#include <dlfcn.h>
+//#include <dlfcn.h>
 #include <string.h>
 
 #include <stdlib.h>
@@ -32,7 +32,7 @@
 #include <android/sensor.h>
 #include <android/log.h>
 #include <android_native_app_glue.h>
-
+#include <android-dl.h>
 
 #define LOG(prio, tag, a, args...) __android_log_print(prio, tag, "[%s::%d]"#a"",__FUNCTION__, __LINE__, ##args);
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
@@ -67,30 +67,30 @@ typedef int (*fty_glutGet)(unsigned int);
 
 static void init_servo()
 {
-	LOGI("init_servo");
+    LOGI("init_servo");
 
     setenv("RUST_LOG", "servo,servo-gfx,layers,js", 1);
     
     char* size_stack = getenv("RUST_MIN_STACK");
     char* rust_log = getenv("RUST_LOG");
+
     LOGI("Stack Size is : %s", size_stack);
     LOGI("RUST_LOG flag is : %s", rust_log);
-
     
     LOGI("load servo library");
-    void* libservo = dlopen("/system/lib/libservo-1e109cfe6daa77e0-0.1.so", RTLD_LAZY);
+    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-1e109cfe6daa77e0-0.1.so");
     if (libservo == NULL) {
     	LOGW("failed to load servo lib: %s", dlerror());
     	return;
     }
 
     LOGI("load rust-glut library");
-    void* libglut = dlopen("/system/lib/libglut-94839cbfe144198-0.1.so", RTLD_LAZY);
+    void* libglut = android_dlopen("/data/data/com.example.ServoAndroid/lib/libglut-94839cbfe144198-0.1.so");
     if (libglut == NULL) {
         LOGW("failed to load rust-glut lib: %s", dlerror());
         return;
     }
-    
+
     REGISTER_FUNCTION(libglut, glutMainLoopEvent);
     REGISTER_FUNCTION(libglut, glutInit);
     REGISTER_FUNCTION(libglut, glutInitDisplayMode);

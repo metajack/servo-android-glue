@@ -26,7 +26,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := ServoAndroid
 
-LOCAL_SRC_FILES := main.cpp 
+LOCAL_SRC_FILES := common.cpp android-dl.cpp main.cpp 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/../include

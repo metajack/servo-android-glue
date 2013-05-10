@@ -78,7 +78,7 @@ static void init_servo()
     LOGI("RUST_LOG flag is : %s", rust_log);
     
     LOGI("load servo library");
-    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-1e109cfe6daa77e0-0.1.so");
+    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-b78aeeb145901cb2-0.1.so");
     if (libservo == NULL) {
     	LOGW("failed to load servo lib: %s", dlerror());
     	return;

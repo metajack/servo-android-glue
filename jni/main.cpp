@@ -78,14 +78,14 @@ static void init_servo()
     LOGI("RUST_LOG flag is : %s", rust_log);
     
     LOGI("load servo library");
-    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-792b25f9d4833874-0.1.so");
+    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-c58c6c7bec56f89-0.1.so");
     if (libservo == NULL) {
     	LOGW("failed to load servo lib: %s", dlerror());
     	return;
     }
 
     LOGI("load rust-glut library");
-    void* libglut = android_dlopen("/data/data/com.example.ServoAndroid/lib/libglut-94839cbfe144198-0.1.so");
+    void* libglut = android_dlopen("/data/data/com.example.ServoAndroid/lib/libglut-102129e09d96658-0.1.so");
     if (libglut == NULL) {
         LOGW("failed to load rust-glut lib: %s", dlerror());
         return;

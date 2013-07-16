@@ -52,6 +52,14 @@ typedef void (*fty_glutDisplayFunc)(void (*)());
 typedef void (*fty_glutReshapeFunc)(void (*)(int, int));
 typedef void (*fty_glutTimerFunc)(unsigned int, void (*)(int), int);
 typedef int (*fty_glutGet)(unsigned int);
+typedef void (*fty_glutKeyboardFunc)(void (*)(unsigned char, int, int));
+typedef void (*fty_glutMouseFunc)(void (*)(int, int, int, int));
+typedef void (*fty_glutMouseWheelFunc)(void (*)(int, int, int, int));
+typedef void (*fty_glutSetWindowTitle)(char const*);
+typedef void (*fty_glutIdleFunc)(void(*)());
+typedef void (*fty_glutInitWindowSize)(int, int);
+
+
 
 #define REGISTER_FUNCTION(lib, function)\
     void (*reg_fn_##function)(fty_##function);\
@@ -69,7 +77,7 @@ static void init_servo()
 {
     LOGI("init_servo");
 
-    setenv("RUST_LOG", "servo,servo-gfx,layers,js", 1);
+    setenv("RUST_LOG", "servo,servo-gfx,layers,js,glut", 1);
     
     char* size_stack = getenv("RUST_MIN_STACK");
     char* rust_log = getenv("RUST_LOG");
@@ -105,6 +113,12 @@ static void init_servo()
     REGISTER_FUNCTION(libglut, glutReshapeFunc);
     REGISTER_FUNCTION(libglut, glutTimerFunc);
     REGISTER_FUNCTION(libglut, glutGet);
+    REGISTER_FUNCTION(libglut, glutKeyboardFunc);
+    REGISTER_FUNCTION(libglut, glutMouseFunc);
+    REGISTER_FUNCTION(libglut, glutMouseWheelFunc);
+    REGISTER_FUNCTION(libglut, glutSetWindowTitle);
+    REGISTER_FUNCTION(libglut, glutIdleFunc);
+    REGISTER_FUNCTION(libglut, glutInitWindowSize);
 
     void (*amain)(void);
     *(void**)(&amain) = dlsym(libservo, "amain");

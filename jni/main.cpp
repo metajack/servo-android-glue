@@ -77,7 +77,7 @@ static void init_servo()
 {
     LOGI("init_servo");
 
-    setenv("RUST_LOG", "servo,servo-gfx,layers,js,glut", 1);
+    setenv("RUST_LOG", "servo,servo-gfx,layers,js,glut,http_client", 1);
     
     char* size_stack = getenv("RUST_MIN_STACK");
     char* rust_log = getenv("RUST_LOG");

@@ -58,7 +58,7 @@ typedef void (*fty_glutMouseWheelFunc)(void (*)(int, int, int, int));
 typedef void (*fty_glutSetWindowTitle)(char const*);
 typedef void (*fty_glutIdleFunc)(void(*)());
 typedef void (*fty_glutInitWindowSize)(int, int);
-
+typedef int (*fty_glutGetModifiers)();
 
 
 #define REGISTER_FUNCTION(lib, function)\
@@ -119,6 +119,7 @@ static void init_servo()
     REGISTER_FUNCTION(libglut, glutSetWindowTitle);
     REGISTER_FUNCTION(libglut, glutIdleFunc);
     REGISTER_FUNCTION(libglut, glutInitWindowSize);
+    REGISTER_FUNCTION(libglut, glutGetModifiers);
 
     void (*amain)(void);
     *(void**)(&amain) = dlsym(libservo, "amain");

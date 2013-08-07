@@ -78,12 +78,15 @@ static void init_servo()
     LOGI("init_servo");
 
 //    setenv("RUST_LOG", "servo,servo-gfx,layers,js,glut,http_client", 1);
+    setenv("SERVO_URL", "/mnt/sdcard/html/demo.html", 1);
     
 //    char* size_stack = getenv("RUST_MIN_STACK");
 //    char* rust_log = getenv("RUST_LOG");
+//    char* servo_url = getenv("SERVO_URL");
 
 //    LOGI("Stack Size is : %s", size_stack);
 //    LOGI("RUST_LOG flag is : %s", rust_log);
+//    LOGI("loading url is : %s", servo_url);
     
     LOGI("load servo library");
     void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-4dc624e940ae8193-0.1.so");

@@ -77,7 +77,7 @@ static void init_servo()
 {
     LOGI("init_servo");
 
-//    setenv("RUST_LOG", "servo,servo-gfx,layers,js,glut,http_client", 1);
+//    setenv("RUST_LOG", "servo,gfx,layers,js,glut", 1);
     setenv("SERVO_URL", "/mnt/sdcard/html/demo.html", 1);
     
 //    char* size_stack = getenv("RUST_MIN_STACK");
@@ -89,7 +89,7 @@ static void init_servo()
 //    LOGI("loading url is : %s", servo_url);
     
     LOGI("load servo library");
-    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-4dc624e940ae8193-0.1.so");
+    void* libservo = android_dlopen("/data/data/com.example.ServoAndroid/lib/libservo-d3ef4d9ac4a225a1-0.1.so");
     if (libservo == NULL) {
     	LOGW("failed to load servo lib: %s", dlerror());
     	return;
@@ -124,11 +124,12 @@ static void init_servo()
     REGISTER_FUNCTION(libglut, glutInitWindowSize);
     REGISTER_FUNCTION(libglut, glutGetModifiers);
 
-    void (*amain)(void);
+    void (*amain)(int, char**);
     *(void**)(&amain) = dlsym(libservo, "amain");
     if (amain) {
         LOGI("go into amain()");
-        (*amain)();
+        static char* argv[] = {"servo"};
+        (*amain)(1, argv);
         return;
     }
     LOGW("could not find amain() from servo");
